@@ -1,47 +1,26 @@
 
-import React, { Fragment, useCallback, useState } from 'react'
+import React, { Fragment, useCallback} from 'react'
 import ReactFlow, {Controls, Background, Node, Edge, applyEdgeChanges, EdgeChange, Connection, addEdge, NodeChange, applyNodeChanges, ConnectionMode} from 'reactflow'
 import 'reactflow/dist/style.css'
 import StoryNodes from '../Nodes/StoryNodes'
-
-const initNodes: Node[] = [
-  {
-    id: '1',
-    type: 'storyNodes',
-    data: {label: 'wow'},
-    position: {x: 400, y: 400}
-  },
-  {
-    id: '2',
-    type: 'storyNodes',
-    data: {label: 'wew'},
-    position: {x: 600, y: 400}
-  }
-]
+import { Flowchart } from '../reducers'
+import { connect } from 'react-redux'
 
 const nodeTypes = {storyNodes: StoryNodes};
 
-const initEdges: Edge[] = [{id:'a1-2', source:'1', target:'2', sourceHandle: 'b', targetHandle: 'c'}];
+function Flow({nodes, edges, NodesChange, EdgesChange, Connecter}: any) {
 
+  const onNodesChange = useCallback(
+    (changes: NodeChange[]) => NodesChange(changes), [NodesChange]
+  )
 
+  const onEdgesChange = useCallback(
+    (changes: EdgeChange[]) => EdgesChange(changes), [EdgesChange]
+  );
 
-function Flow() {
-
-    const [nodes, setNodes] = useState(initNodes)
-    const [edges, setEdges] = useState(initEdges)
-    
-    const onNodesChange = useCallback(
-        (changes: NodeChange[]) => setNodes((nds)=>applyNodeChanges(changes, nds)), [setNodes]
-    )
-
-    const onEdgesChange = useCallback(
-        (changes: EdgeChange[]) => setEdges((eds) => applyEdgeChanges(changes, eds)),
-        [setEdges]
-    );
-    const onConnect = useCallback(
-      (connection: Connection) => setEdges((eds) => addEdge(connection, eds)),
-      [setEdges]
-    );
+  const onConnect = useCallback(
+    (connection: Connection) => Connecter(connection), [Connecter]
+  );
 
   return (
     <Fragment>
@@ -62,4 +41,20 @@ function Flow() {
   )
 }
 
-export default Flow
+const mapStateToProps = (state: Flowchart) => {
+  return {
+    nodes: state.nodes,
+    edges: state.edges
+  }
+}
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    NodesChange: (changes: NodeChange[]) => dispatch({type: 'NODE_CHANGE', payload: changes}),
+    EdgesChange: (changes: EdgeChange[]) => dispatch({type: 'EDGE_CHANGE', payload: changes}),
+    Connecter: (connection: Connection) => dispatch({type: 'CONNECT', payload: connection})
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Flow);
