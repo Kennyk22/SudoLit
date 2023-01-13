@@ -1,5 +1,6 @@
-import { ReactFlow, Node, Edge } from "reactflow"
-type Flowchart = {
+import { useCallback } from "react"
+import { ReactFlow, Node, Edge, NodeChange, EdgeChange, Connection, applyEdgeChanges, applyNodeChanges, addEdge } from "reactflow"
+export type Flowchart = {
   nodes : Node[]
   edges : Edge[]
 }
@@ -19,7 +20,27 @@ const initFlow: Flowchart = {
       position: {x: 600, y: 400}
     }
   ],
-  edges: []
+  edges: [{id:'a1-2', source:'1', target:'2', sourceHandle: 'b', targetHandle: 'c'}]
 }
 
-export const NodeReducer = (state: Flowchart = initFlow, action:object) => {}
+type action = {
+  type: string,
+  payload?: NodeChange[] | EdgeChange[] | Connection
+}
+
+const nodeReducer = (state: Flowchart = initFlow, action:action) => {
+  switch (action.type) {
+    case 'NODE_CHANGE':   
+      return {...state, nodes: applyNodeChanges(action.payload as NodeChange[], state.nodes)}
+    case 'EDGE_CHANGE':   
+      return {...state, edges: applyEdgeChanges(action.payload as EdgeChange[], state.edges)}
+    case 'CONNECT':   
+      return {...state, edges: addEdge(action.payload as Connection, state.edges)}
+    default:
+      return state
+  }
+}
+
+
+
+export default nodeReducer

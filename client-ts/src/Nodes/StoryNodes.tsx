@@ -9,11 +9,6 @@ type NodeData = {
  
 function StoryNodes({ data } : NodeData) {
 
-    const onChange = useCallback((evt: React.ChangeEvent<HTMLInputElement>) => {
-      console.log(data)
-      console.log(evt.target.value)
-    }, [data])
-
   return (
     <div className='story-node'>
       <Handle type="source" position={Position.Top}  id="a"/>
