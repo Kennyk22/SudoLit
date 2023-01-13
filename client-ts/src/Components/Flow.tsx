@@ -1,6 +1,6 @@
 
 import React, { Fragment, useCallback} from 'react'
-import ReactFlow, {Controls, Background, Node, Edge, applyEdgeChanges, EdgeChange, Connection, addEdge, NodeChange, applyNodeChanges, ConnectionMode} from 'reactflow'
+import ReactFlow, {Controls, Background, EdgeChange, Connection, NodeChange, ConnectionMode} from 'reactflow'
 import 'reactflow/dist/style.css'
 import StoryNodes from '../Nodes/StoryNodes'
 import { Flowchart } from '../reducers'
@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 
 const nodeTypes = {storyNodes: StoryNodes};
 
-function Flow({nodes, edges, NodesChange, EdgesChange, Connecter}: any) {
+function Flow({nodes, edges, NodesChange, EdgesChange, Connector}: any) {
 
   const onNodesChange = useCallback(
     (changes: NodeChange[]) => NodesChange(changes), [NodesChange]
@@ -19,7 +19,7 @@ function Flow({nodes, edges, NodesChange, EdgesChange, Connecter}: any) {
   );
 
   const onConnect = useCallback(
-    (connection: Connection) => Connecter(connection), [Connecter]
+    (connection: Connection) => Connector(connection), [Connector]
   );
 
   return (
@@ -52,7 +52,7 @@ const mapDispatchToProps = (dispatch: any) => {
   return {
     NodesChange: (changes: NodeChange[]) => dispatch({type: 'NODE_CHANGE', payload: changes}),
     EdgesChange: (changes: EdgeChange[]) => dispatch({type: 'EDGE_CHANGE', payload: changes}),
-    Connecter: (connection: Connection) => dispatch({type: 'CONNECT', payload: connection})
+    Connector: (connection: Connection) => dispatch({type: 'CONNECT', payload: connection})
   }
 }
 
