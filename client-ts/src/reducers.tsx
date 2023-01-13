@@ -1,5 +1,5 @@
-import { useCallback } from "react"
-import { ReactFlow, Node, Edge, NodeChange, EdgeChange, Connection, applyEdgeChanges, applyNodeChanges, addEdge } from "reactflow"
+
+import { Node, Edge, NodeChange, EdgeChange, Connection, applyEdgeChanges, applyNodeChanges, addEdge } from "reactflow"
 export type Flowchart = {
   nodes : Node[]
   edges : Edge[]
@@ -8,13 +8,13 @@ export type Flowchart = {
 const initFlow: Flowchart = {
   nodes: [
     {
-      id: '4',
+      id: '1',
       type: 'storyNodes',
       data: {label: 'wow'},
       position: {x: 400, y: 400}
     },
     {
-      id: '5',
+      id: '2',
       type: 'storyNodes',
       data: {label: 'wew'},
       position: {x: 600, y: 400}

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import { Handle, Position } from 'reactflow'
 
 type NodeData = {
