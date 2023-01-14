@@ -1,6 +1,5 @@
 
 import { NodeChange, EdgeChange, Connection, applyEdgeChanges, applyNodeChanges, addEdge, Node } from "reactflow"
-import { NodesVisitor } from "typescript"
 import { Flowchart, action } from "./Types"
 // Initial Nodes for Testing
 const initFlow: Flowchart = {
