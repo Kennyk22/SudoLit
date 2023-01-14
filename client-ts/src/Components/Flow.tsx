@@ -2,14 +2,16 @@
 import React, { Fragment, useCallback} from 'react'
 import ReactFlow, {Controls, Background, EdgeChange, Connection, NodeChange, ConnectionMode} from 'reactflow'
 import 'reactflow/dist/style.css'
-import StoryNodes from '../Nodes/StoryNodes'
-import { Flowchart } from '../reducers'
+import { Flowchart } from '../Types'
 import { connect } from 'react-redux'
+import { nodeTypes } from '../Nodes/StoryNodes'
+import NodeButton from './NodeButton'
 
-const nodeTypes = {storyNodes: StoryNodes};
+//all of this is the flowchart made using the REactFlow library
 
 function Flow({nodes, edges, NodesChange, EdgesChange, Connector}: any) {
-
+  
+  //these three functions were suggested by the library dos to improve perfomance and im scared to delete them 
   const onNodesChange = useCallback(
     (changes: NodeChange[]) => NodesChange(changes), [NodesChange]
   )
@@ -21,6 +23,7 @@ function Flow({nodes, edges, NodesChange, EdgesChange, Connector}: any) {
   const onConnect = useCallback(
     (connection: Connection) => Connector(connection), [Connector]
   );
+
 
   return (
     <Fragment>
@@ -36,7 +39,9 @@ function Flow({nodes, edges, NodesChange, EdgesChange, Connector}: any) {
         >
             <Background/>
             <Controls/>
+            <NodeButton/>
         </ReactFlow>
+        
     </Fragment>
   )
 }
@@ -47,7 +52,7 @@ const mapStateToProps = (state: Flowchart) => {
     edges: state.edges
   }
 }
-
+// not sure how to put the hooks in the useCallback functions and the updateArray at the end without breaking, so these will remain for now
 const mapDispatchToProps = (dispatch: any) => {
   return {
     NodesChange: (changes: NodeChange[]) => dispatch({type: 'NODE_CHANGE', payload: changes}),
