@@ -35,4 +35,6 @@ const FlowChartSchema = new Schema({
     EdgeSchema: [EdgeSchema]
 })
 
-const schema = mongoose.model('FlowChart', FlowChartSchema)
+const FlowCharts = mongoose.model('FlowChart', FlowChartSchema)
+
+module.exports = FlowCharts
