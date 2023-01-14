@@ -2,15 +2,41 @@
   height: 100%
 }
 .story-node {
-  height: 50px;
+  display: flex;
+  flex-flow: column;
+  height: max-content;
   border: 1px solid rgb(80, 72, 72);
   padding: 5px;
   border-radius: 5px;
   background: white;
 }
 
+
+
 .story-node label {
   display: block;
   color: #777;
   font-size: 12px;
+}
+
+.imgdiv {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding-bottom: 5%;
+}
+
+.contents > .addimage    {
+  display: none;
+}
+
+.contents:hover > .addimage {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.newNodeDiv {
+  position: absolute;
+  z-index: 4;
 }

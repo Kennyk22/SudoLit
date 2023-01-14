@@ -1,24 +1,26 @@
-import React from 'react'
+
 import { Handle, Position } from 'reactflow'
 
-type NodeData = {
-  data: {
-    label:string
-  }
-}
- 
-function StoryNodes({ data } : NodeData) {
+import DisplayContents from './NodeComponents/DisplayContents'
 
+//memoizes the node to avoid rerendering 
+
+export const nodeTypes = {storyNodes: StoryNodes};
+
+//custom node with four connection points(the Handles)
+
+function StoryNodes({ id } : any) {
+
+  
   return (
     <div className='story-node'>
       <Handle type="source" position={Position.Top}  id="a"/>
       <Handle type="source" position={Position.Right} id="b" />
-      <div>
-        <p>{data.label}</p>
+      <div className='contents'>
+        <DisplayContents id = {id}/>
       </div>
       <Handle type="source" position={Position.Left} id="c" />
       <Handle type="source" position={Position.Bottom} id="d"/>
-      
     </div>
   )
 }

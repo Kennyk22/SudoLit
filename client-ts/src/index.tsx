@@ -5,10 +5,20 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import { Provider } from 'react-redux';
-import { createStore } from 'redux'
+import { compose, createStore } from 'redux'
 import nodeReducer from './reducers';
 
-const store = createStore(nodeReducer)
+//looks weird but just makes the store with the web tools, needed for typescript
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
+
+const store = createStore(nodeReducer, composeEnhancers())
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
