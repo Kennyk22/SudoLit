@@ -1,6 +1,6 @@
 
 import React, { Fragment, useCallback, useEffect, useRef} from 'react'
-import ReactFlow, {Controls, Background, EdgeChange, Connection, NodeChange, ConnectionMode, Node, Edge, updateEdge} from 'reactflow'
+import ReactFlow, {Controls, Background, EdgeChange, Connection, NodeChange, ConnectionMode, Node, Edge, updateEdge, EdgeTypes} from 'reactflow'
 import 'reactflow/dist/style.css'
 import { Flowchart } from '../Types'
 import { connect } from 'react-redux'
@@ -8,7 +8,12 @@ import { nodeTypes } from '../Nodes/StoryNodes'
 import NodeButton from './NodeButton'
 import Services from '../APIservices/APservice'
 import { useAuth0 } from '@auth0/auth0-react'
+import DeleteEdge from '../Edges/DeleteEdge'
 //all of this is the flowchart made using the REactFlow library
+
+const edgeTypes = {
+  deleteEdge : DeleteEdge
+} 
 
 function Flow({nodes, edges, NodesChange, EdgesChange, Connector, DisplayFlow}: any) {
 
@@ -42,8 +47,10 @@ function Flow({nodes, edges, NodesChange, EdgesChange, Connector, DisplayFlow}: 
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes as EdgeTypes}
         proOptions={{hideAttribution:true}}
         connectionMode= {ConnectionMode.Loose}
+
         >
             <Background/>
             <Controls/>

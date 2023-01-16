@@ -31,7 +31,7 @@ const nodeReducer = (state: Flowchart = initFlow, action:action) => {
     case 'EDGE_CHANGE':   
       return {...state, edges: applyEdgeChanges(action.payload as EdgeChange[], state.edges)}
     case 'CONNECT':   
-      return {...state, edges: addEdge(action.payload as Connection, state.edges)}
+      return {...state, edges: addEdge({...action.payload as Connection, type: 'deleteEdge'} , state.edges)}
 
     //Handles the selecting and editing of conentents of node  
     case 'EDIT' :
@@ -72,6 +72,11 @@ const nodeReducer = (state: Flowchart = initFlow, action:action) => {
       return {...state,
         nodes: state.nodes.filter(e => e.id !== action.id), 
         edges: state.edges.filter(e => e.source !== action.id || e.target !== action.id)
+      }
+    case 'DELETE_EDGE':
+      return {
+        ...state,
+        edges: state.edges.filter((e) => e.id !== action.id)
       }
     default:
       return state
