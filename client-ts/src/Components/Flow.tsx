@@ -1,16 +1,25 @@
 
-import React, { Fragment, useCallback} from 'react'
-import ReactFlow, {Controls, Background, EdgeChange, Connection, NodeChange, ConnectionMode} from 'reactflow'
+import React, { Fragment, useCallback, useEffect, useRef} from 'react'
+import ReactFlow, {Controls, Background, EdgeChange, Connection, NodeChange, ConnectionMode, Node, Edge, updateEdge} from 'reactflow'
 import 'reactflow/dist/style.css'
 import { Flowchart } from '../Types'
 import { connect } from 'react-redux'
 import { nodeTypes } from '../Nodes/StoryNodes'
 import NodeButton from './NodeButton'
-
+import Services from '../APIservices/APservice'
+import { useAuth0 } from '@auth0/auth0-react'
 //all of this is the flowchart made using the REactFlow library
 
-function Flow({nodes, edges, NodesChange, EdgesChange, Connector}: any) {
-  
+function Flow({nodes, edges, NodesChange, EdgesChange, Connector, DisplayFlow}: any) {
+
+  const { loginWithRedirect, logout, user, } = useAuth0()
+
+  useEffect(() => {
+    Services.getFlow(user).then(response => {
+      console.log(response)
+      return response ? DisplayFlow(response) : DisplayFlow({ nodes:[], edges:[]} as Flowchart)
+    })
+  }, [DisplayFlow, user]);
   //these three functions were suggested by the library dos to improve perfomance and im scared to delete them 
   const onNodesChange = useCallback(
     (changes: NodeChange[]) => NodesChange(changes), [NodesChange]
@@ -23,7 +32,6 @@ function Flow({nodes, edges, NodesChange, EdgesChange, Connector}: any) {
   const onConnect = useCallback(
     (connection: Connection) => Connector(connection), [Connector]
   );
-
 
   return (
     <Fragment>
@@ -39,7 +47,7 @@ function Flow({nodes, edges, NodesChange, EdgesChange, Connector}: any) {
         >
             <Background/>
             <Controls/>
-            <NodeButton/>
+            <NodeButton  loginWithRedirect = {loginWithRedirect} logout = {logout}  user={user} />
         </ReactFlow>
         
     </Fragment>
@@ -57,7 +65,8 @@ const mapDispatchToProps = (dispatch: any) => {
   return {
     NodesChange: (changes: NodeChange[]) => dispatch({type: 'NODE_CHANGE', payload: changes}),
     EdgesChange: (changes: EdgeChange[]) => dispatch({type: 'EDGE_CHANGE', payload: changes}),
-    Connector: (connection: Connection) => dispatch({type: 'CONNECT', payload: connection})
+    Connector: (connection: Connection) => dispatch({type: 'CONNECT', payload: connection}),
+    DisplayFlow: (flow:Flowchart) => dispatch({type:'DISPLAY_FLOW', payload: flow})
   }
 }
 

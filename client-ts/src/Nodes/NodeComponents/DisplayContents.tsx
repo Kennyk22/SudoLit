@@ -39,6 +39,7 @@ export const DisplayContents = ({ id }: any) => {
           </form>
         </div>: 
         <div className='textContent' onClick={() => dispatch({type: 'EDIT', id: id})}>{dataSel.data.label}</div> }
+        <button className='deletebutton' onClick={() => dispatch({type: 'DELETE', id: id})}>Delete</button>
     </Fragment>
   )
 }

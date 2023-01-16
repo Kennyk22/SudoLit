@@ -11,13 +11,14 @@ export type NodeData = {
 }
 
 export type Flowchart = {
+  user?: string
   nodes : Node[]
   edges : Edge[]
 }
 
 export type action = {
   type: string,
-  payload?: NodeChange[] | EdgeChange[] | Connection | string
+  payload?: NodeChange[] | EdgeChange[] | Connection | string | Flowchart
   id? : string
 }
 
