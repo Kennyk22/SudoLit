@@ -18,8 +18,14 @@ const DataSchema = new Schema({
 const NodeSchema = new Schema({
     id: String, 
     type: String,
-    data: DataSchema,
-    position: PositionSchema,
+    data: {
+        type: DataSchema,
+        default: {}
+    },
+    position: {
+        type: PositionSchema,
+        default: {}
+    },
 })
 
 const EdgeSchema = new Schema({
@@ -27,12 +33,16 @@ const EdgeSchema = new Schema({
    source: String,
    target: String,
    sourceHandle: String,
-   targethandle: String 
+   targetHandle: String,
+   type: String
 })
 
+
 const FlowChartSchema = new Schema({
+    title: String,
+    user: String,
     nodes: [NodeSchema],
-    EdgeSchema: [EdgeSchema]
+    edges: [EdgeSchema]
 })
 
 const FlowCharts = mongoose.model('FlowChart', FlowChartSchema)

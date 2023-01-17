@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { compose, createStore } from 'redux'
 import nodeReducer from './reducers';
+import { Auth0Provider } from '@auth0/auth0-react';
 
 //looks weird but just makes the store with the web tools, needed for typescript
 
@@ -25,9 +26,17 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <Auth0Provider 
+    // rememeber to .env these
+      domain='dev-54vtbvcdkpef3tai.us.auth0.com' 
+      clientId='RIAOSjTQVCkozDWOVU5Z35fyxqXNDyZl'
+      redirectUri={window.location.origin}
+      audience='http://localhost:3001'
+    >
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </Auth0Provider>
   </React.StrictMode>
 );
 
