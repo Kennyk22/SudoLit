@@ -27,9 +27,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Auth0Provider 
+    // rememeber to .env these
       domain='dev-54vtbvcdkpef3tai.us.auth0.com' 
       clientId='RIAOSjTQVCkozDWOVU5Z35fyxqXNDyZl'
       redirectUri={window.location.origin}
+      audience='http://localhost:3001'
     >
       <Provider store={store}>
         <App />

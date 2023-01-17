@@ -33,11 +33,13 @@ const EdgeSchema = new Schema({
    source: String,
    target: String,
    sourceHandle: String,
-   targetHandle: String 
+   targetHandle: String,
+   type: String
 })
 
 
 const FlowChartSchema = new Schema({
+    title: String,
     user: String,
     nodes: [NodeSchema],
     edges: [EdgeSchema]

@@ -1,6 +1,9 @@
 const express = require('express')
 const cors = require('cors')
 const router = require('./router')
+const dotenv = require('dotenv')
+dotenv.config()
+const port = process.env.PORT
 
 const corsConfig = {
     origin: ' http://localhost:3000',
@@ -10,11 +13,10 @@ const corsConfig = {
 const app = express()
 
 app.use(cors(corsConfig))
-
 app.use(express.json())
 
 app.use(router)
 
-app.listen('3001', () => {
-    console.log('server running on port 3001')
+app.listen(port, () => {
+    console.log(`server running on port SECRET`)
 })

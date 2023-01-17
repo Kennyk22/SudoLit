@@ -1,10 +1,13 @@
 
+import { User } from "@auth0/auth0-react"
 import { stat } from "fs"
 import nodeTest from "node:test"
 import { NodeChange, EdgeChange, Connection, applyEdgeChanges, applyNodeChanges, addEdge, Node } from "reactflow"
-import { Flowchart, action } from "./Types"
+import { Flowchart, action, Title } from "./Types"
+
 // Initial Nodes for Testing
 const initFlow: Flowchart = {
+  title: '',
   nodes: [],
   edges: []
 }
@@ -50,11 +53,15 @@ const nodeReducer = (state: Flowchart = initFlow, action:action) => {
         return {...e} 
       })}
     case 'NEW_IMG' :
+      console.log(action.payload)
       return {...state, nodes: state.nodes.map((e) => {
-        e.data.img = e.id === action.id ? action.payload: e.data.img
+        e.data.img = e.id === action.id ? action.payload : e.data.img
         return {...e} 
       })}
-
+    case 'EDIT_TITLE' :
+      return {...state, changeTitle: (state.changeTitle === undefined) ? true : !state.changeTitle}
+    case 'NEW_TITLE' :
+      return {...state, title: action.payload as string}
     //creates new node and adds it to the nodes in the state
     case 'NEW_NODE' :
       console.log(state)
@@ -62,7 +69,7 @@ const nodeReducer = (state: Flowchart = initFlow, action:action) => {
         id: generateId(state.nodes), 
         type: 'storyNodes',
         data: {label: 'Add Text', isEdit:false, newImg: false, img: ''},
-        position: {x: 0, y: 0}
+        position: {x: 600, y: 200}
       }
       return {...state, nodes: [...state.nodes, NewNode]}
     // used for taking flow from api and replacing current flow
@@ -78,6 +85,10 @@ const nodeReducer = (state: Flowchart = initFlow, action:action) => {
         ...state,
         edges: state.edges.filter((e) => e.id !== action.id)
       }
+    case 'ADD_USER':
+      return {...state, user: action.payload as string} 
+    case 'MAKE_FLOWLIST' :
+      return {...state, flowList: action.payload as Title[]}
     default:
       return state
   }

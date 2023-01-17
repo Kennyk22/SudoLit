@@ -1,11 +1,12 @@
 .app {
   height: 100%
 }
+
 .story-node {
   display: flex;
   flex-flow: column;
   height: max-content;
-  border: 1px solid rgb(80, 72, 72);
+  border: 2px solid rgb(0, 0, 0);
   padding: 5px;
   border-radius: 5px;
   background: white;
@@ -27,20 +28,125 @@
 }
 
 .contents > .addimage    {
-  display: none;
+  visibility: hidden;
 }
 
 .contents:hover > .addimage {
+  visibility: visible;
   display: flex;
   width: 100%;
   justify-content: center;
 }
 
-.newNodeDiv {
+.TopBar {
+  display: flex;
   position: absolute;
   z-index: 4;
+  left: 50%;
+  transform: translate(-50%);
+  width: max-content;
 }
 
 img {
-  width: 100px;
+  width: 120px;
+}
+
+/* these are for the top bar buttons */
+
+.TopBar * {
+  border-top-color: rgb(178, 178, 178);
+  border-bottom-color: rgb(178, 178, 178);
+  border-right-color: rgb(178, 178, 178);
+  border-left-color: rgb(178, 178, 178);
+  background-color: rgb(178, 178, 178);
+  padding-top: 1%;
+  padding-bottom: 1%;
+}
+
+.log {
+  order: 6;
+  border-radius: 0 0 15px 0;
+}
+
+.newNodeButton {
+  order: 0;
+  border-radius:  0 0 0 15px;
+}
+.flowListForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(178, 178, 178);
+}
+
+.newText {
+  overflow-wrap: break-word;
+  max-width: 100%;
+  width: max-content;
+  height: max-content;
+}
+
+/* Node settigns */
+
+.react-flow .react-flow__handle {
+  background-color: rgb(0, 0, 0);
+  width: 30px;
+  height: 15px;
+  border: none;
+}
+
+.react-flow .react-flow__handle-top {
+  top: -15px;
+  border-radius: 50px 50px 0 0 ;
+}
+
+.react-flow .react-flow__handle-bottom {
+  bottom: -15px;
+  border-radius: 0 0 50px 50px;
+}
+
+.react-flow .react-flow__handle-left {
+  width: 15px;
+  height: 30px;
+  left: -15px;
+  border-radius:  50px 0 0 50px;
+}
+
+.react-flow .react-flow__handle-right {
+  width: 15px;
+  height: 30px;
+  right: -15px;
+  border-radius:  0 50px 50px 0 ;
+}
+/* this is for edge delete confusing i know */
+.Deletebutton {
+  border: none;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.Deletebutton:hover > svg {
+  color: rgb(190, 25, 25);
+}
+/* this is for node delete */
+.deletebutton {
+  border: none;
+  background-color:rgba(190, 25, 25, 0);
+}
+
+.deletebutton:hover > svg {
+  color: rgb(190, 25, 25);
+}
+
+.bi-x-circle-fill {
+  background-color: white;
+  border-radius: 50%;
+}
+
+.bi-trash3 {
+  background-color: rgba(190, 25, 25, 0);
+}
+
+.react-flow__background {
+  background-color: rgb(255, 255, 255);
 }

@@ -1,13 +1,13 @@
 
-import React, { Fragment, useCallback, useEffect, useRef} from 'react'
-import ReactFlow, {Controls, Background, EdgeChange, Connection, NodeChange, ConnectionMode, Node, Edge, updateEdge, EdgeTypes} from 'reactflow'
+import React, { Fragment, useCallback, useEffect } from 'react'
+import ReactFlow, {Controls, Background, EdgeChange, Connection, NodeChange, ConnectionMode, EdgeTypes, MarkerType} from 'reactflow'
 import 'reactflow/dist/style.css'
 import { Flowchart } from '../Types'
 import { connect } from 'react-redux'
 import { nodeTypes } from '../Nodes/StoryNodes'
 import NodeButton from './NodeButton'
 import Services from '../APIservices/APservice'
-import { useAuth0 } from '@auth0/auth0-react'
+import { useAuth0, User } from '@auth0/auth0-react'
 import DeleteEdge from '../Edges/DeleteEdge'
 //all of this is the flowchart made using the REactFlow library
 
@@ -15,16 +15,27 @@ const edgeTypes = {
   deleteEdge : DeleteEdge
 } 
 
-function Flow({nodes, edges, NodesChange, EdgesChange, Connector, DisplayFlow}: any) {
+const defaultEdgeOptions = {
+  style: { strokeWidth: 3, stroke: 'black' },
+  markerEnd: {
+    type: MarkerType.Arrow,
+    color: 'black',
+  },
+}
+function Flow({nodes, edges, NodesChange, EdgesChange, Connector, DisplayFlow, AddUserToState, _id}: any) {
 
-  const { loginWithRedirect, logout, user, } = useAuth0()
+  const { loginWithRedirect, logout, user, isAuthenticated} = useAuth0()
+  
+  
 
   useEffect(() => {
-    Services.getFlow(user).then(response => {
-      console.log(response)
-      return response ? DisplayFlow(response) : DisplayFlow({ nodes:[], edges:[]} as Flowchart)
-    })
-  }, [DisplayFlow, user]);
+    if (isAuthenticated) {
+      AddUserToState(user?.email)
+      Services.getFlow(_id).then(response => {
+        return response ? DisplayFlow(response) : DisplayFlow({ title: '', user: user?.email, nodes:[], edges:[]} as Flowchart)
+      })
+    }
+  }, [DisplayFlow, isAuthenticated, AddUserToState, user]);
   //these three functions were suggested by the library dos to improve perfomance and im scared to delete them 
   const onNodesChange = useCallback(
     (changes: NodeChange[]) => NodesChange(changes), [NodesChange]
@@ -40,7 +51,7 @@ function Flow({nodes, edges, NodesChange, EdgesChange, Connector, DisplayFlow}: 
 
   return (
     <Fragment>
-        <ReactFlow 
+        <ReactFlow
         nodes={nodes} 
         edges = {edges} 
         onNodesChange={onNodesChange}
@@ -50,21 +61,21 @@ function Flow({nodes, edges, NodesChange, EdgesChange, Connector, DisplayFlow}: 
         edgeTypes={edgeTypes as EdgeTypes}
         proOptions={{hideAttribution:true}}
         connectionMode= {ConnectionMode.Loose}
-
+        defaultEdgeOptions = {defaultEdgeOptions}
         >
-            <Background/>
+            <Background color='black'/>
             <Controls/>
-            <NodeButton  loginWithRedirect = {loginWithRedirect} logout = {logout}  user={user} />
+            <NodeButton  loginWithRedirect = {loginWithRedirect} logout = {logout}  user={user} isAuthenticated = {isAuthenticated} />
         </ReactFlow>
         
     </Fragment>
   )
 }
-
 const mapStateToProps = (state: Flowchart) => {
   return {
     nodes: state.nodes,
-    edges: state.edges
+    edges: state.edges,
+    _id: state._id
   }
 }
 // not sure how to put the hooks in the useCallback functions and the updateArray at the end without breaking, so these will remain for now
@@ -73,7 +84,8 @@ const mapDispatchToProps = (dispatch: any) => {
     NodesChange: (changes: NodeChange[]) => dispatch({type: 'NODE_CHANGE', payload: changes}),
     EdgesChange: (changes: EdgeChange[]) => dispatch({type: 'EDGE_CHANGE', payload: changes}),
     Connector: (connection: Connection) => dispatch({type: 'CONNECT', payload: connection}),
-    DisplayFlow: (flow:Flowchart) => dispatch({type:'DISPLAY_FLOW', payload: flow})
+    DisplayFlow: (flow:Flowchart) => dispatch({type:'DISPLAY_FLOW', payload: flow}),
+    AddUserToState: (User: User) => dispatch({type: 'ADD_USER', payload: User})
   }
 }
 

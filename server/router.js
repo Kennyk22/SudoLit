@@ -1,11 +1,14 @@
 const router = require('express').Router()
 const controllers = require('./Controllers/controllers');
-const authMiddleware = require('./middleware/Auth')
 
-router.get('/flowchart/:email', controllers.getOne)
+router.get('/flowchart/:_id', controllers.getOne)
+
+router.get('/flowchartlist/:email', controllers.getAll)
 
 router.post('/postflow', controllers.postOne)
 
-router.put('/save', controllers.saveOne)
+router.post('/cloud', controllers.cloudUp)
+
+router.put('/save',controllers.saveOne)
 
 module.exports = router
