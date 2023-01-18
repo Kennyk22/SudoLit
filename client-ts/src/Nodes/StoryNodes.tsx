@@ -3,10 +3,6 @@ import { Handle, Position } from 'reactflow'
 
 import DisplayContents from './NodeComponents/DisplayContents'
 
-//memoizes the node to avoid rerendering 
-
-export const nodeTypes = {storyNodes: StoryNodes};
-
 //custom node with four connection points(the Handles)
 
 function StoryNodes({ id } : any) {

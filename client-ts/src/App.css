@@ -12,7 +12,10 @@
   background: white;
 }
 
-
+.textContent {
+  display: flex;
+  max-width: 350px;
+}
 
 .story-node label {
   display: block;
@@ -53,7 +56,13 @@ img {
 
 /* these are for the top bar buttons */
 
-.TopBar * {
+select {
+  color:rgb(255, 255, 255);
+  background-color: black;
+  border-radius: 15px;
+}
+
+.TopBar button {
   border-top-color: rgb(178, 178, 178);
   border-bottom-color: rgb(178, 178, 178);
   border-right-color: rgb(178, 178, 178);
@@ -76,17 +85,63 @@ img {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(178, 178, 178);
+  background-color: rgb(143, 143, 143);
 }
 
-.newText {
-  overflow-wrap: break-word;
-  max-width: 100%;
-  width: max-content;
-  height: max-content;
+.TitleForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(143, 143, 143);
+}
+
+.TitleSubmit {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+#newTitle {
+  margin-left: 10px;
 }
 
 /* Node settigns */
+
+.story-node {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.imgdiv {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.addImageDiv * {
+  display: flex;
+  justify-content: space-around;
+  align-items: space-around;
+  padding-bottom: 2%;
+}
+  
+textarea {
+  resize: none;
+  width: 350px;
+  height: 100px;
+  border-radius: 15px;
+  padding: 6px;
+}
+
+.addImageDiv {
+  flex-flow: row;
+}
+
+.addElButton {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+}
 
 .react-flow .react-flow__handle {
   background-color: rgb(0, 0, 0);
