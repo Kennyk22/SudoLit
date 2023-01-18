@@ -1,7 +1,8 @@
-import { useAuth0 } from '@auth0/auth0-react'
+
+import { User } from '@auth0/auth0-react'
 import React, { Fragment, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Services from '../APIservices/APservice'
+import Services from '../APIservices/APIservice'
 import { Flowchart } from '../Types'
 
 function NodeButton({loginWithRedirect, logout, user, isAuthenticated}: any) {
@@ -10,7 +11,7 @@ function NodeButton({loginWithRedirect, logout, user, isAuthenticated}: any) {
   //will contain the whale button dashboard eventually, for now just makes a new node
   const dispatch = useDispatch()
 
-  const makeFlowList = async (user:any) => {
+  const makeFlowList = async (user:User) => {
     const rawList = await Services.getFlowlist(user)
     const flowList = rawList.map((e:Flowchart) => {return {title : e.title, _id : e._id}})
     dispatch({type: 'MAKE_FLOWLIST', payload: flowList})
@@ -20,10 +21,11 @@ function NodeButton({loginWithRedirect, logout, user, isAuthenticated}: any) {
     if (isAuthenticated ) {
       makeFlowList(user)
     }
-  }, [isAuthenticated])
+  }, [isAuthenticated, user])
 
   
-  const handleSave = async (flow:Flowchart) => {
+  const handleSave = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, flow:Flowchart) => {
+    event.preventDefault()
     if (stateLocal._id) {
       await Services.saveFlow(flow)
         .then(newFlow => dispatch({type:"DISPLAY_FLOW", payload: newFlow}))
@@ -34,7 +36,7 @@ function NodeButton({loginWithRedirect, logout, user, isAuthenticated}: any) {
     makeFlowList(user)
   }
 
-  const handleSubmit = (event: any, type:string) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>, type:string) => {
     event.preventDefault();
     dispatch({type: type})
   }
@@ -42,7 +44,6 @@ function NodeButton({loginWithRedirect, logout, user, isAuthenticated}: any) {
   const handleFlowFromList = async (event:React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const target = event.target as HTMLFormElement;
-    console.log(target.flows.value)
     const newFlow = await Services.getFlow(target.flows.value)
     dispatch({type: 'DISPLAY_FLOW', payload: newFlow})
     makeFlowList(user)
@@ -53,16 +54,16 @@ function NodeButton({loginWithRedirect, logout, user, isAuthenticated}: any) {
         <button className='newNodeButton' onClick={() => dispatch({type:"NEW_NODE"})}>Add Node</button>
         {isAuthenticated ?
           <Fragment>
-            <button className='saveButton' onClick={() => handleSave(stateLocal)}>SAVE</button>
+            <button className='saveButton' onClick={(e) => handleSave(e, stateLocal)}>SAVE</button>
             <button className='log' onClick={() => logout({returnTo: window.location.origin})}>Log Out</button>
             {(stateLocal.changeTitle === undefined || !stateLocal.changeTitle) ? 
               <button className='Titlebutton' onClick={()=>{dispatch({type:'EDIT_TITLE'})}}>
                 Title: {stateLocal.title ? stateLocal.title : 'New Flow'}
               </button> :
               <form className='TitleForm' onSubmit={(event) => handleSubmit(event, 'EDIT_TITLE')}>
-                <label htmlFor="newTitle">New Title</label>
+                <label htmlFor="newTitle">New Title: </label>
                 <input type="text" id='newTitle' defaultValue={stateLocal.title} onChange={event => dispatch({type: 'NEW_TITLE', payload: event.target.value})}/>
-                <button type='submit'>Save</button>
+                <button className='TitleSubmit' type='submit'>Save</button>
               </form>
             }
             <form className='flowListForm' onSubmit={handleFlowFromList}>
