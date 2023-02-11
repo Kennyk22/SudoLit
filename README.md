@@ -40,6 +40,7 @@ npm run dev
 
 ## Tech Stack
 ### Client
+* [Auth0](https://auth0.com/)
 * [Typescript](https://www.typescriptlang.org/)
 * [React](https://reactjs.org/)
 * [NodeJS](https://nodejs.org/en/)
@@ -50,6 +51,7 @@ npm run dev
 * [Express](https://expressjs.com/)
 * [MongoDB](https://www.mongodb.com/)
 * [Mongoose](https://mongoosejs.com/)
+* [Cloudinary](https://cloudinary.com/)
 
 
 ## Contributors
