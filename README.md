@@ -1,7 +1,8 @@
 # SudoLit
+
     An app that lets you create simple visual flowcharts for creative projects.
     
-# Getting Started
+## Getting Started
     clone the repo
     ```
     git clone https://github.com/Kennyk22/SudoLit.git
@@ -35,19 +36,19 @@
     npm run dev
     ```
 
-# Tech Stack
-# Client
+## Tech Stack
+### Client
 * [Typescript](https://www.typescriptlang.org/)
 * [React](https://reactjs.org/)
 * [NodeJS](https://nodejs.org/en/)
 * [React-Redux](https://react-redux.js.org/)
 * [Reactflow](https://reactflow.dev/)
-# Server
+### Server
 * [JavaScript](https://www.javascript.com/)
 * [Express](https://expressjs.com/)
 * [MongoDB](https://www.mongodb.com/)
 * [Mongoose](https://mongoosejs.com/)
 
 
-# Contributors
+## Contributors
     Kenny Karter
