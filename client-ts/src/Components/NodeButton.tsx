@@ -8,7 +8,6 @@ import { Flowchart } from '../Types'
 function NodeButton({loginWithRedirect, logout, user, isAuthenticated}: any) {
   
   const stateLocal: Flowchart = useSelector(state => state) as Flowchart
-  //will contain the whale button dashboard eventually, for now just makes a new node
   const dispatch = useDispatch()
 
   const makeFlowList = async (user:User) => {
@@ -19,7 +18,8 @@ function NodeButton({loginWithRedirect, logout, user, isAuthenticated}: any) {
 
   useEffect(()=>{
     if (isAuthenticated ) {
-      makeFlowList(user)
+      (async () => {
+      await makeFlowList(user)})()
     }
   }, [isAuthenticated, user])
 
@@ -45,6 +45,7 @@ function NodeButton({loginWithRedirect, logout, user, isAuthenticated}: any) {
     event.preventDefault()
     const target = event.target as HTMLFormElement;
     const newFlow = await Services.getFlow(target.flows.value)
+    console.log(newFlow)
     dispatch({type: 'DISPLAY_FLOW', payload: newFlow})
     makeFlowList(user)
   }
@@ -69,6 +70,7 @@ function NodeButton({loginWithRedirect, logout, user, isAuthenticated}: any) {
             <form className='flowListForm' onSubmit={handleFlowFromList}>
                 <select title='flows' name='flows' className='flowsList' id='flowsList'>
                   {stateLocal.flowList?.map((e)=>{
+                    console.log(e.title, "list thing")
                     return <option value={e._id} key={e._id}>{e.title}</option>
                   })}
                 </select>

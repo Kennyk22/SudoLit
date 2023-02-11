@@ -27,7 +27,6 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Auth0Provider 
-    // rememeber to .env these
       domain='dev-54vtbvcdkpef3tai.us.auth0.com' 
       clientId='RIAOSjTQVCkozDWOVU5Z35fyxqXNDyZl'
       redirectUri={window.location.origin}
@@ -40,7 +39,4 @@ root.render(
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

@@ -10,7 +10,7 @@ import NodeButton from './Components/NodeButton'
 import Services from './APIservices/APIservice'
 import { useAuth0, User } from '@auth0/auth0-react'
 import DeleteEdge from './Edges/DeleteEdge'
-//all of this is the flowchart made using the REactFlow library
+
 
 const nodeTypes = {
   storyNodes: StoryNodes
@@ -43,7 +43,7 @@ function App({nodes, edges, NodesChange, EdgesChange, Connector, DisplayFlow, Ad
       })
     }
   }, [DisplayFlow, isAuthenticated, AddUserToState, user, _id]);
-  //these three functions were suggested by the library dos to improve perfomance and im scared to delete them 
+
   const onNodesChange = useCallback(
     (changes: NodeChange[]) => NodesChange(changes), [NodesChange]
   )
@@ -85,7 +85,7 @@ const mapStateToProps = (state: Flowchart) => {
     _id: state._id
   }
 }
-// not sure how to put the hooks in the useCallback functions and the updateArray at the end without breaking, so these will remain for now
+
 const mapDispatchToProps = (dispatch: any) => {
   return {
     NodesChange: (changes: NodeChange[]) => dispatch({type: 'NODE_CHANGE', payload: changes}),

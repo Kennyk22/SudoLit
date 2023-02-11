@@ -5,7 +5,8 @@ import { Flowchart, action, Title } from "./Types"
 const initFlow: Flowchart = {
   title: '',
   nodes: [],
-  edges: []
+  edges: [],
+  flowList: [],
 }
 
 //Helper Function Creates ID and Checks if ID is Taken, rarely necassary but good future proofing
@@ -67,7 +68,7 @@ const nodeReducer = (state: Flowchart = initFlow, action:action) => {
       return {...state, nodes: [...state.nodes, NewNode]}
     // used for taking flow from api and replacing current flow
     case 'DISPLAY_FLOW':
-      return {...action.payload as Flowchart}
+      return {...state, ...action.payload as Flowchart}
     //Deletes nodes
     case 'DELETE':
       return {...state,
