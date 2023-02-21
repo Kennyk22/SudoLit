@@ -1,6 +1,6 @@
 # SudoLit
 
-An app that lets you create simple visual flowcharts for creative projects. Create, Save and edit Flowccharts with text and images.
+An app that lets you create simple visual flowcharts for creative projects. Create, Save and edit Flowcharts with text and images.
     
 ![SudoLit](https://user-images.githubusercontent.com/114926465/218268179-6799f273-f1b1-4d09-99e9-271b4a1dd41f.jpg)
 
